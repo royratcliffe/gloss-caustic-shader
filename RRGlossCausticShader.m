@@ -1,7 +1,24 @@
 // RRUtils RRGlossCausticShader.m
 //
 // Copyright © 2008, Roy Ratcliffe, Lancaster, United Kingdom
-// All rights reserved
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 //
 //------------------------------------------------------------------------------
 
@@ -21,8 +38,16 @@ struct RRGlossCausticShaderInfo
 		CGFloat reflectionPower;
 		CGFloat startingWhite;
 		CGFloat endingWhite;
-		// Note, Matt's initial and final white has become starting and ending white. This small adjustment to nomenclature aligns the implementation with Apple's NSGradient which uses starting and ending colour to describe initial and final colour co-ordinates (see the -initWithStartingColor:startingColor endingColor:endingColor instance method).
-		// White origin and extent optimise the shader's internal computations. Exponential output range for gloss maps to white linearly. Linear mapping requires one factor for multiplication and one offset for addition.
+		// Note, Matt's initial and final white has become starting and ending
+		// white. This small adjustment to nomenclature aligns the
+		// implementation with Apple's NSGradient which uses starting and ending
+		// colour to describe initial and final colour co-ordinates (see the
+		// -initWithStartingColor:startingColor endingColor:endingColor instance
+		// method).
+		// White origin and extent optimise the shader's internal
+		// computations. Exponential output range for gloss maps to white
+		// linearly. Linear mapping requires one factor for multiplication and
+		// one offset for addition.
 		CGFloat whiteOrigin;
 		CGFloat whiteExtent;
 	}
@@ -59,7 +84,12 @@ void RRGlossCausticShaderEvaluate(void *info, const CGFloat *in, CGFloat *out);
 
 - (void)drawShadingFromPoint:(NSPoint)startingPoint toPoint:(NSPoint)endingPoint inContext:(CGContextRef)aContext
 {
-	// Interestingly, even surprisingly, caching the function object does not work. The implementation could easily save the CGFunctionRef in-between invocations. Trouble is: it does not work. The first invocation runs the shader function, but subsequent invocations do not. Strange but true. Is there something about Core Graphics Functions that allow single executions only?
+	// Interestingly, even surprisingly, caching the function object does not
+	// work. The implementation could easily save the CGFunctionRef in-between
+	// invocations. Trouble is: it does not work. The first invocation runs the
+	// shader function, but subsequent invocations do not. Strange but true. Is
+	// there something about Core Graphics Functions that allow single
+	// executions only?
 	static const CGFloat domain[] =
 	{
 		0.0f, 1.0f,
@@ -94,8 +124,11 @@ void RRGlossCausticShaderEvaluate(void *info, const CGFloat *in, CGFloat *out);
 	// (non-caustic RGBA --> caustic RGBA)
 	[[[matcher matchForColor:[self noncausticColor]] colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]] getComponents:info->causticRGBA];
 	
-	// (non-caustic RGBA, gloss reflection power, starting and ending white --> gloss white origin, extent)
-	// Glossing depends on four variables: the non-caustic colour, the gloss reflection power, starting white level and ending white level. Gloss power applies to the non-caustic colour luminance.
+	// (non-caustic RGBA, gloss reflection power, starting and ending white -->
+	// gloss white origin, extent)
+	// Glossing depends on four variables: the non-caustic colour, the gloss
+	// reflection power, starting white level and ending white level. Gloss
+	// power applies to the non-caustic colour luminance.
 	CGFloat gloss = powf(RRLuminanceFromRGBComponents(info->noncausticRGBA), info->gloss.reflectionPower);
 	info->gloss.whiteOrigin = info->gloss.startingWhite*gloss;
 	info->gloss.whiteExtent = info->gloss.endingWhite*gloss - info->gloss.whiteOrigin;
