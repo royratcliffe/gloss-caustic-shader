@@ -1,5 +1,5 @@
 .DS_Store
-GlossCausticShader.xcodeproj/TemplateIcon.icns
-GlossCausticShader.xcodeproj/*.pbxuser
-GlossCausticShader.xcodeproj/*.perspectivev3
-config
+**/*.xcodeproj/TemplateIcon.icns
+**/*.xcodeproj/*.pbxuser
+**/*.xcodeproj/*.perspectivev3
+**/*.xcodeproj/*.mode1v3
