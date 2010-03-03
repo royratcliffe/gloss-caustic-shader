@@ -1,6 +1,6 @@
 // RRUtils RRExponentialFunction.m
 //
-// Copyright © 2008, Roy Ratcliffe, Lancaster, United Kingdom
+// Copyright © 2008-2010, Roy Ratcliffe, Pioneering Software, United Kingdom
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@ void RRExponentialFunctionSetCoefficient(RRExponentialFunction *f, float c)
 {
 	f->coefficient = c;
 	f->exponentOfMinusCoefficient = expf(-c);
-	f->oneOverOneMinusExponentOfMinusCoefficient = 1.0f / (1.0f - f->exponentOfMinusCoefficient);
+	f->oneOverOneMinusExponentOfMinusCoefficient = 1.0f/(1.0f - f->exponentOfMinusCoefficient);
 	// Computing "one over one minus exponent of minus coefficient" optimises
 	// for multiplication over division. Effectively, the exponential function
 	// divides by one minus the exponent of the coefficient. Deriving the

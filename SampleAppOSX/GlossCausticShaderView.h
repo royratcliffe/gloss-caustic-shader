@@ -15,6 +15,8 @@
 }
 
 - (IBAction)update:sender;
-	// The nib wires all the controls to this action, as well as binding them to their respective key paths on the shader instance. That way, the controls update correctly and the view receives notification of changes.
+	// The nib wires all the controls to this action, as well as binding them to
+	// their respective key paths on the shader instance. That way, the controls
+	// update correctly and the view receives notification of changes.
 
 @end
