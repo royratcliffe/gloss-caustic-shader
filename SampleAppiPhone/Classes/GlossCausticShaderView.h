@@ -27,11 +27,14 @@
 
 @class RRGlossCausticShader;
 
+// uses a shader to fill its bounds rectangle
 @interface GlossCausticShaderView : UIView
 {
 	RRGlossCausticShader *shader;
 }
 
 @property(nonatomic, retain) RRGlossCausticShader *shader;
+
+- (void)update;
 
 @end
