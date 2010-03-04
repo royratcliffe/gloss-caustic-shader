@@ -15,6 +15,12 @@
 		2899E5220DE3E06400AC0155 /* GlossCausticShaderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* GlossCausticShaderViewController.xib */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28D7ACF80DDB3853001CB0EB /* GlossCausticShaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* GlossCausticShaderViewController.m */; };
+		785003F1113B88D5006A9784 /* UIColor+RRUIKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 785003F0113B88D5006A9784 /* UIColor+RRUIKit.m */; };
+		78500404113B92E4006A9784 /* RRCausticColorMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 78500403113B92E4006A9784 /* RRCausticColorMatcher.m */; };
+		78500431113BCF5F006A9784 /* RRExponentialFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 7850042C113BCF5F006A9784 /* RRExponentialFunction.m */; };
+		78500432113BCF5F006A9784 /* RRGlossCausticShader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7850042E113BCF5F006A9784 /* RRGlossCausticShader.m */; };
+		78500433113BCF5F006A9784 /* RRLuminanceFromRGBComponents.m in Sources */ = {isa = PBXBuildFile; fileRef = 78500430113BCF5F006A9784 /* RRLuminanceFromRGBComponents.m */; };
+		78500490113BDFE2006A9784 /* GlossCausticShaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7850048F113BDFE2006A9784 /* GlossCausticShaderView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +36,18 @@
 		28D7ACF70DDB3853001CB0EB /* GlossCausticShaderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlossCausticShaderViewController.m; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* GlossCausticShader_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlossCausticShader_Prefix.pch; sourceTree = "<group>"; };
+		785003EF113B88D5006A9784 /* UIColor+RRUIKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+RRUIKit.h"; path = "../UIColor+RRUIKit.h"; sourceTree = SOURCE_ROOT; };
+		785003F0113B88D5006A9784 /* UIColor+RRUIKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+RRUIKit.m"; path = "../UIColor+RRUIKit.m"; sourceTree = SOURCE_ROOT; };
+		78500402113B92E4006A9784 /* RRCausticColorMatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RRCausticColorMatcher.h; path = ../RRCausticColorMatcher.h; sourceTree = SOURCE_ROOT; };
+		78500403113B92E4006A9784 /* RRCausticColorMatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RRCausticColorMatcher.m; path = ../RRCausticColorMatcher.m; sourceTree = SOURCE_ROOT; };
+		7850042B113BCF5F006A9784 /* RRExponentialFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RRExponentialFunction.h; path = ../RRExponentialFunction.h; sourceTree = SOURCE_ROOT; };
+		7850042C113BCF5F006A9784 /* RRExponentialFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RRExponentialFunction.m; path = ../RRExponentialFunction.m; sourceTree = SOURCE_ROOT; };
+		7850042D113BCF5F006A9784 /* RRGlossCausticShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RRGlossCausticShader.h; path = ../RRGlossCausticShader.h; sourceTree = SOURCE_ROOT; };
+		7850042E113BCF5F006A9784 /* RRGlossCausticShader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RRGlossCausticShader.m; path = ../RRGlossCausticShader.m; sourceTree = SOURCE_ROOT; };
+		7850042F113BCF5F006A9784 /* RRLuminanceFromRGBComponents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RRLuminanceFromRGBComponents.h; path = ../RRLuminanceFromRGBComponents.h; sourceTree = SOURCE_ROOT; };
+		78500430113BCF5F006A9784 /* RRLuminanceFromRGBComponents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RRLuminanceFromRGBComponents.m; path = ../RRLuminanceFromRGBComponents.m; sourceTree = SOURCE_ROOT; };
+		7850048E113BDFE2006A9784 /* GlossCausticShaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlossCausticShaderView.h; sourceTree = "<group>"; };
+		7850048F113BDFE2006A9784 /* GlossCausticShaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlossCausticShaderView.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* GlossCausticShader-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GlossCausticShader-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -54,6 +72,8 @@
 				1D3623250D0F684500981E51 /* GlossCausticShaderAppDelegate.m */,
 				28D7ACF60DDB3853001CB0EB /* GlossCausticShaderViewController.h */,
 				28D7ACF70DDB3853001CB0EB /* GlossCausticShaderViewController.m */,
+				7850048E113BDFE2006A9784 /* GlossCausticShaderView.h */,
+				7850048F113BDFE2006A9784 /* GlossCausticShaderView.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -74,6 +94,8 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				7850046A113BDC81006A9784 /* UIColor Extensions */,
+				7850046B113BDC8F006A9784 /* Gloss-Caustic Shader */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -105,6 +127,30 @@
 				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7850046A113BDC81006A9784 /* UIColor Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				785003EF113B88D5006A9784 /* UIColor+RRUIKit.h */,
+				785003F0113B88D5006A9784 /* UIColor+RRUIKit.m */,
+			);
+			name = "UIColor Extensions";
+			sourceTree = "<group>";
+		};
+		7850046B113BDC8F006A9784 /* Gloss-Caustic Shader */ = {
+			isa = PBXGroup;
+			children = (
+				78500402113B92E4006A9784 /* RRCausticColorMatcher.h */,
+				78500403113B92E4006A9784 /* RRCausticColorMatcher.m */,
+				7850042B113BCF5F006A9784 /* RRExponentialFunction.h */,
+				7850042C113BCF5F006A9784 /* RRExponentialFunction.m */,
+				7850042D113BCF5F006A9784 /* RRGlossCausticShader.h */,
+				7850042E113BCF5F006A9784 /* RRGlossCausticShader.m */,
+				7850042F113BCF5F006A9784 /* RRLuminanceFromRGBComponents.h */,
+				78500430113BCF5F006A9784 /* RRLuminanceFromRGBComponents.m */,
+			);
+			name = "Gloss-Caustic Shader";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -164,6 +210,12 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* GlossCausticShaderAppDelegate.m in Sources */,
 				28D7ACF80DDB3853001CB0EB /* GlossCausticShaderViewController.m in Sources */,
+				785003F1113B88D5006A9784 /* UIColor+RRUIKit.m in Sources */,
+				78500404113B92E4006A9784 /* RRCausticColorMatcher.m in Sources */,
+				78500431113BCF5F006A9784 /* RRExponentialFunction.m in Sources */,
+				78500432113BCF5F006A9784 /* RRGlossCausticShader.m in Sources */,
+				78500433113BCF5F006A9784 /* RRLuminanceFromRGBComponents.m in Sources */,
+				78500490113BDFE2006A9784 /* GlossCausticShaderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
