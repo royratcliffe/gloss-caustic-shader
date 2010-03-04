@@ -36,7 +36,7 @@
 	RRCausticColorMatcher *matcher;
 }
 
-- (void)drawShadingFromPoint:(NSPoint)startingPoint toPoint:(NSPoint)endingPoint inContext:(CGContextRef)aContext;
+- (void)drawShadingFromPoint:(CGPoint)startingPoint toPoint:(CGPoint)endingPoint inContext:(CGContextRef)aContext;
 
 - (void)update;
 	// Send -update after changing one or more parameters. Setters do not

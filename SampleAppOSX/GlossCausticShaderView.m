@@ -15,7 +15,7 @@
 {
 	// Shade from the top-left corner of the bounds to the bottom-left.
 	NSRect bounds = [self bounds];
-	[shader drawShadingFromPoint:NSMakePoint(NSMinX(bounds), NSMaxY(bounds)) toPoint:NSMakePoint(NSMinX(bounds), NSMinY(bounds)) inContext:[[NSGraphicsContext currentContext] graphicsPort]];
+	[shader drawShadingFromPoint:CGPointMake(NSMinX(bounds), NSMaxY(bounds)) toPoint:CGPointMake(NSMinX(bounds), NSMinY(bounds)) inContext:[[NSGraphicsContext currentContext] graphicsPort]];
 }
 
 - (IBAction)update:sender

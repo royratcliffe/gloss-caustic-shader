@@ -90,7 +90,7 @@ void RRGlossCausticShaderEvaluate(void *info, const CGFloat *in, CGFloat *out);
 	[super dealloc];
 }
 
-- (void)drawShadingFromPoint:(NSPoint)startingPoint toPoint:(NSPoint)endingPoint inContext:(CGContextRef)aContext
+- (void)drawShadingFromPoint:(CGPoint)startingPoint toPoint:(CGPoint)endingPoint inContext:(CGContextRef)aContext
 {
 	// Interestingly, even surprisingly, caching the function object does not
 	// work. The implementation could easily save the CGFunctionRef in-between
@@ -118,7 +118,7 @@ void RRGlossCausticShaderEvaluate(void *info, const CGFloat *in, CGFloat *out);
 #define DIMENSION(v) (sizeof(v)/sizeof((v)[0]))
 	CGFunctionRef evaluateFunction = CGFunctionCreate(info, DIMENSION(domain)/2, domain, DIMENSION(range)/2, range, &callbacks);
 	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-	CGShadingRef shading = CGShadingCreateAxial(colorSpace, NSPointToCGPoint(startingPoint), NSPointToCGPoint(endingPoint), evaluateFunction, false, false);
+	CGShadingRef shading = CGShadingCreateAxial(colorSpace, startingPoint, endingPoint, evaluateFunction, false, false);
 	CGContextDrawShading(aContext, shading);
 	CGShadingRelease(shading);
 	CGColorSpaceRelease(colorSpace);
