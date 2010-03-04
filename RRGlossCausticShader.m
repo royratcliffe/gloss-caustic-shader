@@ -28,6 +28,10 @@
 #import "RRCausticColorMatcher.h"
 #import "RRLuminanceFromRGBComponents.h"
 
+#if TARGET_OS_IPHONE
+#import "UIColor+RRUIKit.h"
+#endif
+
 struct RRGlossCausticShaderInfo
 {
 	RRExponentialFunction exponentialFunction;
@@ -70,7 +74,11 @@ void RRGlossCausticShaderEvaluate(void *info, const CGFloat *in, CGFloat *out);
 		info->gloss.startingWhite = 0.6f;
 		info->gloss.endingWhite = 0.2f;
 		matcher = [[RRCausticColorMatcher alloc] init];
+#if TARGET_OS_IPHONE
+		[self setNoncausticColor:[UIColor grayColor]];
+#else
 		[self setNoncausticColor:[NSColor grayColor]];
+#endif
 		[self update];
 	}
 	return self;
@@ -122,7 +130,13 @@ void RRGlossCausticShaderEvaluate(void *info, const CGFloat *in, CGFloat *out);
 	[self willChangeValueForKey:@"color"];
 	
 	// (non-caustic RGBA --> caustic RGBA)
-	[[[matcher matchForColor:[self noncausticColor]] colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]] getComponents:info->causticRGBA];
+	id causticColor = [matcher matchForColor:[self noncausticColor]];
+#if TARGET_OS_IPHONE
+	causticColor = [causticColor colorUsingColorSpaceModel:kCGColorSpaceModelRGB];
+#else
+	causticColor = [causticColor colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]];
+#endif
+	[causticColor getComponents:info->causticRGBA];
 	
 	// (non-caustic RGBA, gloss reflection power, starting and ending white -->
 	// gloss white origin, extent)
@@ -136,7 +150,9 @@ void RRGlossCausticShaderEvaluate(void *info, const CGFloat *in, CGFloat *out);
 	[self didChangeValueForKey:@"color"];
 }
 
-#pragma mark Setters
+//------------------------------------------------------------------------------
+#pragma mark                                                             Setters
+//------------------------------------------------------------------------------
 
 //	exponential coefficient
 //	non-caustic RGBA
@@ -148,9 +164,18 @@ void RRGlossCausticShaderEvaluate(void *info, const CGFloat *in, CGFloat *out);
 {
 	RRExponentialFunctionSetCoefficient(&info->exponentialFunction, c);
 }
+#if TARGET_OS_IPHONE
+- (void)setNoncausticColor:(UIColor *)aColor
+#else
 - (void)setNoncausticColor:(NSColor *)aColor
+#endif
 {
-	[[aColor colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]] getComponents:info->noncausticRGBA];
+#if TARGET_OS_IPHONE
+	aColor = [aColor colorUsingColorSpaceModel:kCGColorSpaceModelRGB];
+#else
+	aColor = [aColor colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]];
+#endif
+	[aColor getComponents:info->noncausticRGBA];
 }
 - (void)setGlossReflectionPower:(CGFloat)powerLevel
 {
@@ -165,15 +190,25 @@ void RRGlossCausticShaderEvaluate(void *info, const CGFloat *in, CGFloat *out);
 	info->gloss.endingWhite = whiteLevel;
 }
 
-#pragma mark Getters
+//------------------------------------------------------------------------------
+#pragma mark                                                             Getters
+//------------------------------------------------------------------------------
 
 - (float)exponentialCoefficient
 {
 	return info->exponentialFunction.coefficient;
 }
+#if TARGET_OS_IPHONE
+- (UIColor *)noncausticColor
+#else
 - (NSColor *)noncausticColor
+#endif
 {
+#if TARGET_OS_IPHONE
+	return [UIColor colorWithRed:info->noncausticRGBA[0] green:info->noncausticRGBA[1] blue:info->noncausticRGBA[2] alpha:info->noncausticRGBA[3]];
+#else
 	return [NSColor colorWithDeviceRed:info->noncausticRGBA[0] green:info->noncausticRGBA[1] blue:info->noncausticRGBA[2] alpha:info->noncausticRGBA[3]];
+#endif
 }
 - (CGFloat)glossReflectionPower
 {
@@ -202,6 +237,41 @@ void RRGlossCausticShaderEvaluate(void *info, const CGFloat *in, CGFloat *out);
 		automatically = [super automaticallyNotifiesObserversForKey:key];
 	}
 	return automatically;
+}
+
+//------------------------------------------------------------------------------
+#pragma mark                                                              Coding
+//------------------------------------------------------------------------------
+
+static NSString *const kExponentialCoefficient = @"RRExponentialCoefficient";
+static NSString *const kNoncausticColor = @"RRNoncausticColor";
+static NSString *const kGlossReflectionPower = @"RRGlossReflectionPower";
+static NSString *const kGlossStartingWhite = @"RRGlossStartingWhite";
+static NSString *const kGlossEndingWhite = @"RRGlossEndingWhite";
+static NSString *const kMatcher = @"RRMatcher";
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+	[aCoder encodeFloat:[self exponentialCoefficient] forKey:kExponentialCoefficient];
+	[aCoder encodeObject:[self noncausticColor] forKey:kNoncausticColor];
+	[aCoder encodeFloat:[self glossReflectionPower] forKey:kGlossReflectionPower];
+	[aCoder encodeFloat:[self glossStartingWhite] forKey:kGlossStartingWhite];
+	[aCoder encodeFloat:[self glossEndingWhite] forKey:kGlossEndingWhite];
+	[aCoder encodeObject:matcher forKey:kMatcher];
+}
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+	if ((self = [self init]))
+	{
+		[self setExponentialCoefficient:[aDecoder decodeFloatForKey:kExponentialCoefficient]];
+		[self setNoncausticColor:[aDecoder decodeObjectForKey:kNoncausticColor]];
+		[self setGlossReflectionPower:[aDecoder decodeFloatForKey:kGlossReflectionPower]];
+		[self setGlossStartingWhite:[aDecoder decodeFloatForKey:kGlossStartingWhite]];
+		[self setGlossEndingWhite:[aDecoder decodeFloatForKey:kGlossEndingWhite]];
+		[matcher release];
+		matcher = [[aDecoder decodeObjectForKey:kMatcher] retain];
+	}
+	return self;
 }
 
 @end

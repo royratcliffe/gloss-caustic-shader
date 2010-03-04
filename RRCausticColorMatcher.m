@@ -24,6 +24,10 @@
 
 #import "RRCausticColorMatcher.h"
 
+#if TARGET_OS_IPHONE
+#import "UIColor+RRUIKit.h"
+#endif
+
 @implementation RRCausticColorMatcher
 
 - (id)init
@@ -42,13 +46,30 @@
 	return self;
 }
 
+#if TARGET_OS_IPHONE
+- (UIColor *)matchForColor:(UIColor *)aColor
+#else
 - (NSColor *)matchForColor:(NSColor *)aColor
+#endif
 {
 	CGFloat hsba[4];
-	[[aColor colorUsingColorSpaceName:NSCalibratedRGBColorSpace] getHue:hsba+0 saturation:hsba+1 brightness:hsba+2 alpha:hsba+3];
+	
+#if TARGET_OS_IPHONE
+	aColor = [aColor colorUsingColorSpaceModel:kCGColorSpaceModelRGB];
+#else
+	aColor = [aColor colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+#endif
+	
+	[aColor getHue:hsba+0 saturation:hsba+1 brightness:hsba+2 alpha:hsba+3];
 	[self matchForHSB:hsba caustic:hsba];
+	
+#if TARGET_OS_IPHONE
+	return [UIColor colorWithHue:hsba[0] saturation:hsba[1] brightness:hsba[2] alpha:hsba[3]];
+#else
 	return [NSColor colorWithCalibratedHue:hsba[0] saturation:hsba[1] brightness:hsba[2] alpha:hsba[3]];
+#endif
 }
+
 - (void)matchForHSB:(const CGFloat *)hsb caustic:(CGFloat *)outHSB
 {
 #define HCOMP (0) // hue component
@@ -127,5 +148,45 @@
 @synthesize blueCausticHue;
 @synthesize causticFractionDomainFactor;
 @synthesize causticFractionRangeFactor;
+
+//------------------------------------------------------------------------------
+#pragma mark                                                              Coding
+//------------------------------------------------------------------------------
+
+static NSString *const kCausticHue = @"RRCausticHue";
+static NSString *const kGraySaturationThreshold = @"RRGraySaturationThreshold";
+static NSString *const kCausticSaturationForGrays = @"RRCausticSaturationForGrays";
+static NSString *const kRedHueThreshold = @"RRRedHueThreshold";
+static NSString *const kBlueHueThreshold = @"RRBlueHueThreshold";
+static NSString *const kBlueCausticHue = @"RRBlueCausticHue";
+static NSString *const kCausticFractionDomainFactor = @"RRCausticFractionDomainFactor";
+static NSString *const kCausticFractionRangeFactor = @"RRCausticFractionRangeFactor";
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+	[aCoder encodeFloat:[self causticHue] forKey:kCausticHue];
+	[aCoder encodeFloat:[self graySaturationThreshold] forKey:kGraySaturationThreshold];
+	[aCoder encodeFloat:[self causticSaturationForGrays] forKey:kCausticSaturationForGrays];
+	[aCoder encodeFloat:[self redHueThreshold] forKey:kRedHueThreshold];
+	[aCoder encodeFloat:[self blueHueThreshold] forKey:kBlueHueThreshold];
+	[aCoder encodeFloat:[self blueCausticHue] forKey:kBlueCausticHue];
+	[aCoder encodeFloat:[self causticFractionDomainFactor] forKey:kCausticFractionDomainFactor];
+	[aCoder encodeFloat:[self causticFractionRangeFactor] forKey:kCausticFractionRangeFactor];
+}
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+	if ((self = [super init]))
+	{
+		[self setCausticHue:[aDecoder decodeFloatForKey:kCausticHue]];
+		[self setGraySaturationThreshold:[aDecoder decodeFloatForKey:kGraySaturationThreshold]];
+		[self setCausticSaturationForGrays:[aDecoder decodeFloatForKey:kCausticSaturationForGrays]];
+		[self setRedHueThreshold:[aDecoder decodeFloatForKey:kRedHueThreshold]];
+		[self setBlueHueThreshold:[aDecoder decodeFloatForKey:kBlueHueThreshold]];
+		[self setBlueCausticHue:[aDecoder decodeFloatForKey:kBlueCausticHue]];
+		[self setCausticFractionDomainFactor:[aDecoder decodeFloatForKey:kCausticFractionDomainFactor]];
+		[self setCausticFractionRangeFactor:[aDecoder decodeFloatForKey:kCausticFractionRangeFactor]];
+	}
+	return self;
+}
 
 @end

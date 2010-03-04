@@ -22,11 +22,15 @@
 //
 //------------------------------------------------------------------------------
 
+#if TARGET_OS_IPHONE
+#import <UIKit/UIKit.h>
+#else
 #import <AppKit/AppKit.h>
+#endif
 
 @class RRCausticColorMatcher;
 
-@interface RRGlossCausticShader : NSObject
+@interface RRGlossCausticShader : NSObject<NSCoding>
 {
 	struct RRGlossCausticShaderInfo *info;
 	RRCausticColorMatcher *matcher;
@@ -48,7 +52,11 @@
 //---------------------------------------------------------------------- setters
 
 - (void)setExponentialCoefficient:(float)c;
+#if TARGET_OS_IPHONE
+- (void)setNoncausticColor:(UIColor *)aColor;
+#else
 - (void)setNoncausticColor:(NSColor *)aColor;
+#endif
 	// Converts aColor to device RGB colour space. The resulting colour
 	// components become the new non-caustic colour. This setter, like all
 	// others, does not automatically readjust the dependencies. Invoke -update
@@ -63,7 +71,11 @@
 //---------------------------------------------------------------------- getters
 
 - (float)exponentialCoefficient;
+#if TARGET_OS_IPHONE
+- (UIColor *)noncausticColor;
+#else
 - (NSColor *)noncausticColor;
+#endif
 	// Returns the non-caustic colour.
 - (CGFloat)glossReflectionPower;
 - (CGFloat)glossStartingWhite;

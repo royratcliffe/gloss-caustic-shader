@@ -27,15 +27,24 @@
 
 // Fill in some of the "missing" UIColor methods, making UIColor more compatible
 // with NSColor. This includes access to individual colour components and HSV
-// conversion. Use identical method signatures as far as possible.
+// conversion. Use similar method signatures and semantics as far as possible.
 
 @interface UIColor(RRUIKit)
+
+- (UIColor *)colorUsingColorSpaceModel:(CGColorSpaceModel)model;
 
 - (CGColorSpaceRef)colorSpace;
 - (CGColorSpaceModel)colorSpaceModel;
 
 - (NSUInteger)numberOfComponents;
 - (void)getComponents:(CGFloat *)components;
+
+// The RGB component accessor methods deliberately presume the colour has the
+// necessary red, green and blue components. This is a design-by-contract
+// assumption. First determine RGB compliance before asking for the components,
+// or guarantee compliance by applying the methods only to known RGB
+// colours. NSColor interface takes this approach; Cocoa's methods throw
+// exceptions if not applied to RGB colours.
 
 - (CGFloat)redComponent;
 - (CGFloat)greenComponent;

@@ -27,6 +27,38 @@
 
 @implementation UIColor(RRUIKit)
 
+- (UIColor *)colorUsingColorSpaceModel:(CGColorSpaceModel)model
+{
+	UIColor *color = nil;
+	switch ([self colorSpaceModel])
+	{
+		case kCGColorSpaceModelMonochrome:
+			switch (model)
+			{
+				case kCGColorSpaceModelMonochrome:
+					// monochrome --> monochrome
+					color = self;
+					break;
+				case kCGColorSpaceModelRGB:
+				{
+					// monochrome --> RGB
+					CGFloat components[[self numberOfComponents]];
+					[self getComponents:components];
+					color = [UIColor colorWithRed:components[0] green:components[0] blue:components[0] alpha:components[1]];
+				}
+			}
+			break;
+		case kCGColorSpaceModelRGB:
+			switch (model)
+			{
+				case kCGColorSpaceModelRGB:
+					// RGB --> RGB
+					color = self;
+			}
+	}
+	return color;
+}
+
 - (CGColorSpaceRef)colorSpace
 {
 	return CGColorGetColorSpace([self CGColor]);
