@@ -1,4 +1,4 @@
-// GlossCausticShader GlossCausticShaderViewController.h
+// GlossCausticShader ShaderViewController.h
 //
 // Copyright © 2010, Roy Ratcliffe, Pioneering Software, United Kingdom
 // All rights reserved
@@ -25,11 +25,11 @@
 
 #import <UIKit/UIKit.h>
 
-@class GlossCausticShaderView;
+@class ShaderView;
 
-@interface GlossCausticShaderViewController : UIViewController
+@interface ShaderViewController : UIViewController
 {
-	GlossCausticShaderView *shaderView;
+	ShaderView *shaderView;
 	UIView *controlsView;
 	UIScrollView *scrollView;
 	UIButton *colorButton;
@@ -72,7 +72,7 @@
 	UILabel *causticFractionRangeFactorLabel;
 }
 
-@property(nonatomic, retain) IBOutlet GlossCausticShaderView *shaderView;
+@property(nonatomic, retain) IBOutlet ShaderView *shaderView;
 @property(nonatomic, retain) IBOutlet UIView *controlsView;
 @property(nonatomic, retain) IBOutlet UIScrollView *scrollView;
 @property(nonatomic, retain) IBOutlet UIButton *colorButton;

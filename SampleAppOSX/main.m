@@ -1,6 +1,6 @@
 // $Id: main.m,v 1.4 2008/06/29 17:53:46 royratcliffe Exp $
 //
-// Copyright © 2008, Roy Ratcliffe, Lancaster, United Kingdom
+// Copyright © 2008, Roy Ratcliffe, Pioneering Software, United Kingdom
 // All rights reserved
 //
 //------------------------------------------------------------------------------

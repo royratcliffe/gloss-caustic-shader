@@ -1,4 +1,4 @@
-// GlossCausticShader GlossCausticShaderAppDelegate.m
+// GlossCausticShader ShaderView.m
 //
 // Copyright © 2010, Roy Ratcliffe, Pioneering Software, United Kingdom
 // All rights reserved
@@ -23,29 +23,48 @@
 //
 //------------------------------------------------------------------------------
 
-#import "GlossCausticShaderAppDelegate.h"
-#import "GlossCausticShaderViewController.h"
+#import "ShaderView.h"
+#import "RRGlossCausticShader.h"
 
-@implementation GlossCausticShaderAppDelegate
+// for access to Core Animation layer
+#import <QuartzCore/QuartzCore.h>
 
-@synthesize window;
-@synthesize viewController;
+@implementation ShaderView
+
+@synthesize shader;
+
+- (void)awakeFromNib
+{
+	shader = [[RRGlossCausticShader alloc] init];
+	
+	self.layer.masksToBounds = YES;
+	self.layer.cornerRadius = 10.0f;
+	self.layer.borderColor = [[UIColor blackColor] CGColor];
+	self.layer.borderWidth = 1.0f;
+}
 
 - (void)dealloc
 {
-	[viewController release];
-	[window release];
+	[shader release];
 	[super dealloc];
 }
 
+- (void)update
+{
+	[shader update];
+	[self setNeedsDisplay];
+}
+
 //------------------------------------------------------------------------------
-#pragma mark                                             UI Application Delegate
+#pragma mark                                                   UI View Rendering
 //------------------------------------------------------------------------------
 
-- (void)applicationDidFinishLaunching:(UIApplication *)application
+- (void)drawRect:(CGRect)rect
 {
-	[window addSubview:viewController.view];
-	[window makeKeyAndVisible];
+	CGRect bounds = self.bounds;
+	[shader drawShadingFromPoint:bounds.origin
+						 toPoint:CGPointMake(bounds.origin.x, bounds.origin.y + bounds.size.height)
+					   inContext:UIGraphicsGetCurrentContext()];
 }
 
 @end

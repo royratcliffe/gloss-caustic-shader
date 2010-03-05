@@ -1,4 +1,4 @@
-// GlossCausticShader GlossCausticShaderAppDelegate.h
+// GlossCausticShader ShaderView.h
 //
 // Copyright © 2010, Roy Ratcliffe, Pioneering Software, United Kingdom
 // All rights reserved
@@ -25,15 +25,16 @@
 
 #import <UIKit/UIKit.h>
 
-@class GlossCausticShaderViewController;
+@class RRGlossCausticShader;
 
-@interface GlossCausticShaderAppDelegate : NSObject<UIApplicationDelegate>
+// uses a shader to fill its bounds rectangle
+@interface ShaderView : UIView
 {
-	UIWindow *window;
-	GlossCausticShaderViewController *viewController;
+	RRGlossCausticShader *shader;
 }
 
-@property(nonatomic, retain) IBOutlet UIWindow *window;
-@property(nonatomic, retain) IBOutlet GlossCausticShaderViewController *viewController;
+@property(nonatomic, retain) RRGlossCausticShader *shader;
+
+- (void)update;
 
 @end

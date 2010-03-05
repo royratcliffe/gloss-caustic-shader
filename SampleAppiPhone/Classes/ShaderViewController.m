@@ -1,4 +1,4 @@
-// GlossCausticShader GlossCausticShaderViewController.m
+// GlossCausticShader ShaderViewController.m
 //
 // Copyright © 2010, Roy Ratcliffe, Pioneering Software, United Kingdom
 // All rights reserved
@@ -23,15 +23,40 @@
 //
 //------------------------------------------------------------------------------
 
-#import "GlossCausticShaderViewController.h"
-#import "GlossCausticShaderView.h"
+#import "ShaderViewController.h"
+#import "ShaderView.h"
 
 #import "RRGlossCausticShader.h"
 #import "UIColor+RRUIKit.h"
 
 #import <QuartzCore/QuartzCore.h>
 
-@implementation GlossCausticShaderViewController
+// iPhone OS makes binding more difficult. It lacks Cocoa's key-value bindings,
+// at the current version. However, it does not lack key-value coding. The
+// controller can access shader and matcher properties using KVC. This
+// simplifies the controller to some extent. Slider tags identify which key-path
+// the slider value modifies. Tags are integers only, on iPhone.
+
+static NSString *const kKeyPaths[] =
+{
+	@"exponentialCoefficient",
+	@"glossReflectionPower",
+	@"glossStartingWhite",
+	@"glossEndingWhite",
+	@"matcher.causticHue",
+	@"matcher.graySaturationThreshold",
+	@"matcher.causticSaturationForGrays",
+	@"matcher.redHueThreshold",
+	@"matcher.blueHueThreshold",
+	@"matcher.blueCausticHue",
+	@"matcher.causticFractionDomainFactor",
+	@"matcher.causticFractionRangeFactor",
+};
+
+// Make it easier to add a digit of precision, or remove one!
+static NSString *const kFloatFormat = @"%.3f";
+
+@implementation ShaderViewController
 
 @synthesize shaderView;
 @synthesize controlsView;
@@ -72,36 +97,20 @@
 @synthesize causticFractionDomainFactorLabel;
 @synthesize causticFractionRangeFactorLabel;
 
-static NSString *const keyPaths[] =
-{
-	@"exponentialCoefficient",
-	@"glossReflectionPower",
-	@"glossStartingWhite",
-	@"glossEndingWhite",
-	@"matcher.causticHue",
-	@"matcher.graySaturationThreshold",
-	@"matcher.causticSaturationForGrays",
-	@"matcher.redHueThreshold",
-	@"matcher.blueHueThreshold",
-	@"matcher.blueCausticHue",
-	@"matcher.causticFractionDomainFactor",
-	@"matcher.causticFractionRangeFactor",
-};
-
 - (void)syncUIWithShaderSettings
 {
 	UIColor *color = [self.shaderView.shader noncausticColor];
 	self.colorButton.backgroundColor = color;
-	self.redLabel.text = [NSString stringWithFormat:@"%.3f", self.redSlider.value = [color redComponent]];
-	self.greenLabel.text = [NSString stringWithFormat:@"%.3f", self.greenSlider.value = [color greenComponent]];
-	self.blueLabel.text = [NSString stringWithFormat:@"%.3f", self.blueSlider.value = [color blueComponent]];
-	for (NSUInteger i = 0; i < sizeof(keyPaths)/sizeof(keyPaths[0]); i++)
+	self.redLabel.text = [NSString stringWithFormat:kFloatFormat, self.redSlider.value = [color redComponent]];
+	self.greenLabel.text = [NSString stringWithFormat:kFloatFormat, self.greenSlider.value = [color greenComponent]];
+	self.blueLabel.text = [NSString stringWithFormat:kFloatFormat, self.blueSlider.value = [color blueComponent]];
+	for (NSUInteger i = 0; i < sizeof(kKeyPaths)/sizeof(kKeyPaths[0]); i++)
 	{
-		float value = [[self.shaderView.shader valueForKeyPath:keyPaths[i]] floatValue];
-		NSString *key = [[keyPaths[i] componentsSeparatedByString:@"."] lastObject];
+		float value = [[self.shaderView.shader valueForKeyPath:kKeyPaths[i]] floatValue];
+		NSString *key = [[kKeyPaths[i] componentsSeparatedByString:@"."] lastObject];
 		UISlider *slider = [self valueForKeyPath:[key stringByAppendingString:@"Slider"]];
 		UILabel *label = [self valueForKeyPath:[key stringByAppendingString:@"Label"]];
-		label.text = [NSString stringWithFormat:@"%.3f", slider.value = value];
+		label.text = [NSString stringWithFormat:kFloatFormat, slider.value = value];
 	}
 	[self.shaderView update];
 }
@@ -111,11 +120,7 @@ static NSString *const keyPaths[] =
 	NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:@"Shader"];
 	if (data)
 	{
-		RRGlossCausticShader *shader = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-		if (shader)
-		{
-			shaderView.shader = shader;
-		}
+		shaderView.shader = [NSKeyedUnarchiver unarchiveObjectWithData:data];
 	}
 }
 - (void)saveSettingsToUserDefaults
@@ -148,7 +153,22 @@ static NSString *const keyPaths[] =
 
 - (IBAction)printToConsoleButtonTapped:(id)sender
 {
-	
+	// Access by key paths simplifies the print-to-console method.
+	RRGlossCausticShader *shader = self.shaderView.shader;
+	NSString *format = [kFloatFormat stringByAppendingString:@"f"];
+	NSLog(@"UIColor *baseColor = [UIColor colorWithRed:%@ green:%@ blue:%@ alpha:1.0f];",
+		  [NSString stringWithFormat:format, [[shader noncausticColor] redComponent]],
+		  [NSString stringWithFormat:format, [[shader noncausticColor] greenComponent]],
+		  [NSString stringWithFormat:format, [[shader noncausticColor] blueComponent]]);
+	NSLog(@"[shader setNoncausticColor:baseColor];");
+	for (NSUInteger i = 0; i < sizeof(kKeyPaths)/sizeof(kKeyPaths[0]); i++)
+	{
+		float value = [[shader valueForKeyPath:kKeyPaths[i]] floatValue];
+		NSArray *components = [kKeyPaths[i] componentsSeparatedByString:@"."];
+		NSString *subKeyPath = [components count] == 1 ? @"" : [@"." stringByAppendingString:[components objectAtIndex:0]];
+		NSString *setName = [[components lastObject] capitalizedString];
+		NSLog(@"[shader%@ set%@:%@];", subKeyPath, setName, [NSString stringWithFormat:format, value]);
+	}
 }
 
 - (IBAction)resetToDefaultsButtonTapped:(id)sender
@@ -169,9 +189,9 @@ static NSString *const keyPaths[] =
 	
 	self.colorButton.backgroundColor = newColor;
 	
-	self.redLabel.text   = [NSString stringWithFormat:@"%.3f", [newColor redComponent]];
-	self.greenLabel.text = [NSString stringWithFormat:@"%.3f", [newColor greenComponent]];
-	self.blueLabel.text  = [NSString stringWithFormat:@"%.3f", [newColor blueComponent]];
+	self.redLabel.text   = [NSString stringWithFormat:kFloatFormat, [newColor redComponent]];
+	self.greenLabel.text = [NSString stringWithFormat:kFloatFormat, [newColor greenComponent]];
+	self.blueLabel.text  = [NSString stringWithFormat:kFloatFormat, [newColor blueComponent]];
 	
 	[self.shaderView.shader setNoncausticColor:newColor];
 	[self.shaderView update];
@@ -183,11 +203,13 @@ static NSString *const keyPaths[] =
 - (IBAction)sliderChanged:(id)sender
 {
 	UISlider *slider = sender;
-	NSString *keyPath = keyPaths[slider.tag];
+	NSString *keyPath = kKeyPaths[slider.tag];
 	NSString *key = [[keyPath componentsSeparatedByString:@"."] lastObject];
 	UILabel *label = [self valueForKeyPath:[key stringByAppendingString:@"Label"]];
-	label.text = [NSString stringWithFormat:@"%.3f", slider.value];
 	
+	// Slider adjustments update the shader, shader view, label and
+	// defaults. That is, everything else apart from the slider.
+	label.text = [NSString stringWithFormat:kFloatFormat, slider.value];
 	[self.shaderView.shader setValue:[NSNumber numberWithFloat:slider.value] forKeyPath:keyPath];
 	[self.shaderView update];
 	[self saveSettingsToUserDefaults];
