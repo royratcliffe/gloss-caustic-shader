@@ -55,6 +55,9 @@
 {
 	CGFloat hsba[4];
 	
+	// The given colour, aColor, may not have an RGB triple hence not directly
+	// possible to convert to HSB; the conversion requires access to red, green
+	// and blue components. Start by moving the incoming colour to RGB space.
 #if TARGET_OS_IPHONE
 	aColor = [aColor colorUsingColorSpaceModel:kCGColorSpaceModelRGB];
 #else

@@ -27,6 +27,13 @@
 #import <UIKit/UIKit.h>
 #else
 #import <AppKit/AppKit.h>
+#if !defined(NS_NONATOMIC_IPHONEONLY)
+	#if TARGET_OS_IPHONE
+	#define NS_NONATOMIC_IPHONEONLY nonatomic
+	#else
+	#define NS_NONATOMIC_IPHONEONLY
+	#endif
+#endif
 #endif
 
 @interface RRCausticColorMatcher : NSObject<NSCoding>
@@ -73,13 +80,13 @@
 - (void)matchForHSB:(const CGFloat *)hsb caustic:(CGFloat *)outHSB;
 	// Does the work.
 
-@property(assign) CGFloat causticHue;
-@property(assign) CGFloat graySaturationThreshold;
-@property(assign) CGFloat causticSaturationForGrays;
-@property(assign) CGFloat redHueThreshold;
-@property(assign) CGFloat blueHueThreshold;
-@property(assign) CGFloat blueCausticHue;
-@property(assign) CGFloat causticFractionDomainFactor;
-@property(assign) CGFloat causticFractionRangeFactor;
+@property(assign, NS_NONATOMIC_IPHONEONLY) CGFloat causticHue;
+@property(assign, NS_NONATOMIC_IPHONEONLY) CGFloat graySaturationThreshold;
+@property(assign, NS_NONATOMIC_IPHONEONLY) CGFloat causticSaturationForGrays;
+@property(assign, NS_NONATOMIC_IPHONEONLY) CGFloat redHueThreshold;
+@property(assign, NS_NONATOMIC_IPHONEONLY) CGFloat blueHueThreshold;
+@property(assign, NS_NONATOMIC_IPHONEONLY) CGFloat blueCausticHue;
+@property(assign, NS_NONATOMIC_IPHONEONLY) CGFloat causticFractionDomainFactor;
+@property(assign, NS_NONATOMIC_IPHONEONLY) CGFloat causticFractionRangeFactor;
 
 @end

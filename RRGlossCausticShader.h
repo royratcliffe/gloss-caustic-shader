@@ -27,6 +27,15 @@
 #import <UIKit/UIKit.h>
 #else
 #import <AppKit/AppKit.h>
+// Be pedantic. Avoid atomic attributes on iPhone platforms. Note, Mac OS X
+// versions prior to 10.6 Snow Leopard do not define NS_NONATOMIC_IPHONEONLY.
+#if !defined(NS_NONATOMIC_IPHONEONLY)
+	#if TARGET_OS_IPHONE
+	#define NS_NONATOMIC_IPHONEONLY nonatomic
+	#else
+	#define NS_NONATOMIC_IPHONEONLY
+	#endif
+#endif
 #endif
 
 @class RRCausticColorMatcher;
@@ -97,6 +106,6 @@
 // override the default caustic matching behaviour. Developers might want to
 // customise the colour matching algorithmically as well as by tweaking
 // parameters.
-@property(readonly) RRCausticColorMatcher *matcher;
+@property(readonly, NS_NONATOMIC_IPHONEONLY) RRCausticColorMatcher *matcher;
 
 @end
