@@ -53,6 +53,7 @@
 //---------------------------------------------------------------------- setters
 
 - (void)setExponentialCoefficient:(float)c;
+
 #if TARGET_OS_IPHONE
 - (void)setNoncausticColor:(UIColor *)aColor;
 #else
@@ -75,12 +76,14 @@
 //---------------------------------------------------------------------- getters
 
 - (float)exponentialCoefficient;
+
 #if TARGET_OS_IPHONE
 - (UIColor *)noncausticColor;
 #else
 - (NSColor *)noncausticColor;
 #endif
 	// Returns the non-caustic colour.
+
 - (CGFloat)glossReflectionPower;
 - (CGFloat)glossStartingWhite;
 - (CGFloat)glossEndingWhite;

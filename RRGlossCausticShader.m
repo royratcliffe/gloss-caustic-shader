@@ -141,6 +141,7 @@ void RRGlossCausticShaderEvaluate(void *info, const CGFloat *in, CGFloat *out);
 	
 	// (non-caustic RGBA, gloss reflection power, starting and ending white -->
 	// gloss white origin, extent)
+	//
 	// Glossing depends on four variables: the non-caustic colour, the gloss
 	// reflection power, starting white level and ending white level. Gloss
 	// power applies to the non-caustic colour luminance.

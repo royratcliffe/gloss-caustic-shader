@@ -84,14 +84,17 @@
 
 - (CGFloat)redComponent
 {
+	NSAssert1([self colorSpaceModel] == kCGColorSpaceModelRGB, @"%@ must be an RGB color", self);
 	return CGColorGetComponents([self CGColor])[0];
 }
 - (CGFloat)greenComponent
 {
+	NSAssert1([self colorSpaceModel] == kCGColorSpaceModelRGB, @"%@ must be an RGB color", self);
 	return CGColorGetComponents([self CGColor])[1];
 }
 - (CGFloat)blueComponent
 {
+	NSAssert1([self colorSpaceModel] == kCGColorSpaceModelRGB, @"%@ must be an RGB color", self);
 	return CGColorGetComponents([self CGColor])[2];
 }
 

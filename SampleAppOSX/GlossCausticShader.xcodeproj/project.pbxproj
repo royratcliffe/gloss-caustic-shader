@@ -140,12 +140,12 @@
 		7829F5171140B42C00209753 /* Gloss-Caustic Shader */ = {
 			isa = PBXGroup;
 			children = (
+				7850034C113B76BE006A9784 /* RRGlossCausticShader.h */,
+				7850034D113B76BE006A9784 /* RRGlossCausticShader.m */,
 				78500348113B76BE006A9784 /* RRCausticColorMatcher.h */,
 				78500349113B76BE006A9784 /* RRCausticColorMatcher.m */,
 				7850034A113B76BE006A9784 /* RRExponentialFunction.h */,
 				7850034B113B76BE006A9784 /* RRExponentialFunction.m */,
-				7850034C113B76BE006A9784 /* RRGlossCausticShader.h */,
-				7850034D113B76BE006A9784 /* RRGlossCausticShader.m */,
 				78500351113B76CB006A9784 /* RRLuminanceFromRGBComponents.h */,
 				78500352113B76CB006A9784 /* RRLuminanceFromRGBComponents.m */,
 			);

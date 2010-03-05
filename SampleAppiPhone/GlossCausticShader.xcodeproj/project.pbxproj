@@ -134,16 +134,16 @@
 		7850046A113BDC81006A9784 /* Gloss-Caustic Shader */ = {
 			isa = PBXGroup;
 			children = (
-				785003EF113B88D5006A9784 /* UIColor+RRUIKit.h */,
-				785003F0113B88D5006A9784 /* UIColor+RRUIKit.m */,
+				7850042D113BCF5F006A9784 /* RRGlossCausticShader.h */,
+				7850042E113BCF5F006A9784 /* RRGlossCausticShader.m */,
 				78500402113B92E4006A9784 /* RRCausticColorMatcher.h */,
 				78500403113B92E4006A9784 /* RRCausticColorMatcher.m */,
 				7850042B113BCF5F006A9784 /* RRExponentialFunction.h */,
 				7850042C113BCF5F006A9784 /* RRExponentialFunction.m */,
-				7850042D113BCF5F006A9784 /* RRGlossCausticShader.h */,
-				7850042E113BCF5F006A9784 /* RRGlossCausticShader.m */,
 				7850042F113BCF5F006A9784 /* RRLuminanceFromRGBComponents.h */,
 				78500430113BCF5F006A9784 /* RRLuminanceFromRGBComponents.m */,
+				785003EF113B88D5006A9784 /* UIColor+RRUIKit.h */,
+				785003F0113B88D5006A9784 /* UIColor+RRUIKit.m */,
 			);
 			name = "Gloss-Caustic Shader";
 			path = ..;
