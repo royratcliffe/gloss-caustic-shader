@@ -1,0 +1,39 @@
+RRGlossCausticShader
+====================
+
+Originally developed by Matt Gallagher, further developed by Roy Ratcliffe, ported to iPhone by Ole Begemann, and now with additional refactoring by Roy Ratcliffe. Call it a team effort!
+
+* Matt's original post: [Drawing gloss gradients in CoreGraphics](http://cocoawithlove.com/2008/09/drawing-gloss-gradients-in-coregraphics.html)
+* Roy's further-development post: [Gloss-Caustic Shading](http://blog.pioneeringsoftware.co.uk/2008/12/09/gloss-caustic-shading)
+* Ole's iPhone-port post: [Porting RRGlossCausticShader to the iPhone](http://oleb.net/blog/2010/02/porting-rrglosscausticshader-to-the-iphone/)
+* Roy's additional-refactoring post: [Gloss Caustic Shader for iPhone](http://blog.pioneeringsoftware.co.uk/2010/03/04/gloss-caustic-shader-for-iphone)
+
+Usage
+-----
+
+1. Add the files in the root folder to your Xcode project, namely:
+ * `RRGlossCausticShader.h`/`m` for the gloss-caustic shader,
+ * `RRCausticColorMatcher.h`/`m` for the caustic colour matcher,
+ * `RRExponentialFunction.h`/`m` for the exponential helper,
+ * `RRLuminanceFromRGBComponents.h`/`m` for luminance conversion,
+ * `UIColor+RRUIKit.h`/`m` for `UIColor` extensions (iPhone only).
+1. Create an instance of `RRGlossCausticShader`.
+1. Optionally modify the shader's base colour and parameters (see `RRGlossCausticShader.h` and `RRCausticColorMatcher.h` for the possible settings).
+1. In your `-drawRect:` method, do something like this:
+
+	- (void)drawRect:(CGRect)rect
+	{
+	    CGRect bounds = self.bounds;
+	    [shader drawShadingFromPoint:bounds.origin
+	                         toPoint:CGPointMake(bounds.origin.x, bounds.origin.y + bounds.size.height)
+	                       inContext:UIGraphicsGetCurrentContext()];
+	}
+
+MIT License
+-----------
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS," WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
