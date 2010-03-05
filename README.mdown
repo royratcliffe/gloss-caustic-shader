@@ -11,12 +11,7 @@ Originally developed by Matt Gallagher, further developed by Roy Ratcliffe, port
 Usage
 -----
 
-1. Add the files in the root folder to your Xcode project, namely:
- * `RRGlossCausticShader.h`/`m` for the gloss-caustic shader,
- * `RRCausticColorMatcher.h`/`m` for the caustic colour matcher,
- * `RRExponentialFunction.h`/`m` for the exponential helper,
- * `RRLuminanceFromRGBComponents.h`/`m` for luminance conversion,
- * `UIColor+RRUIKit.h`/`m` for `UIColor` extensions (iPhone only).
+1. Add the files in the root folder to your Xcode project, namely: `RRGlossCausticShader.h`/`m` for the gloss-caustic shader, `RRCausticColorMatcher.h`/`m` for the caustic colour matcher, `RRExponentialFunction.h`/`m` for the exponential helper, `RRLuminanceFromRGBComponents.h`/`m` for luminance conversion, `UIColor+RRUIKit.h`/`m` for `UIColor` extensions (iPhone only).
 1. Create an instance of `RRGlossCausticShader`.
 1. Optionally modify the shader's base colour and parameters (see `RRGlossCausticShader.h` and `RRCausticColorMatcher.h` for the possible settings).
 1. In your `-drawRect:` method, do something like this:
