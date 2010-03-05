@@ -62,11 +62,14 @@
 	// components become the new non-caustic colour. This setter, like all
 	// others, does not automatically readjust the dependencies. Invoke -update
 	// after adjusting one or more settings.
+
 - (void)setGlossReflectionPower:(CGFloat)powerLevel;
 	// Assigns a new power level to the gloss reflection.
+
 - (void)setGlossStartingWhite:(CGFloat)whiteLevel;
 	// White levels range between 0 and 1 inclusive. Gloss starting white levels
 	// typically have higher values compared to ending white level.
+
 - (void)setGlossEndingWhite:(CGFloat)whiteLevel;
 
 //---------------------------------------------------------------------- getters
