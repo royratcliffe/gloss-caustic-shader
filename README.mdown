@@ -21,13 +21,10 @@ Usage
 1. Optionally modify the shader's base colour and parameters (see `RRGlossCausticShader.h` and `RRCausticColorMatcher.h` for the possible settings).
 1. In your `-drawRect:` method, do something like this:
 
-	- (void)drawRect:(CGRect)rect
-	{
 	    CGRect bounds = self.bounds;
 	    [shader drawShadingFromPoint:bounds.origin
 	                         toPoint:CGPointMake(bounds.origin.x, bounds.origin.y + bounds.size.height)
 	                       inContext:UIGraphicsGetCurrentContext()];
-	}
 
 MIT License
 -----------
