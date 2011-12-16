@@ -62,9 +62,18 @@
 - (void)drawRect:(CGRect)rect
 {
 	CGRect bounds = self.bounds;
+	
+	// If you want to draw gloss shading within a rounded rectangle, first set
+	// up a rounded-rectangle clipping path. This is how you can do that using
+	// Core Graphics. Layer masking makes this redundant here however.
+	CGContextRef context = UIGraphicsGetCurrentContext();
+	UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:bounds cornerRadius:10.0f];
+	CGContextAddPath(context, [path CGPath]);
+	CGContextClip(context);
+	
 	[shader drawShadingFromPoint:bounds.origin
 						 toPoint:CGPointMake(bounds.origin.x, bounds.origin.y + bounds.size.height)
-					   inContext:UIGraphicsGetCurrentContext()];
+					   inContext:context];
 }
 
 @end
