@@ -33,6 +33,7 @@
 {
 	// Shade from the top-left corner of the bounds to the bottom-left.
 	NSRect bounds = [self bounds];
+	[[NSBezierPath bezierPathWithRoundedRect:bounds xRadius:10.0 yRadius:10.0] setClip];
 	[shader drawShadingFromPoint:CGPointMake(NSMinX(bounds), NSMaxY(bounds)) toPoint:CGPointMake(NSMinX(bounds), NSMinY(bounds)) inContext:[[NSGraphicsContext currentContext] graphicsPort]];
 }
 
