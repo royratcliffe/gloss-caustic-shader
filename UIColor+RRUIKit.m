@@ -45,7 +45,10 @@
 					CGFloat components[[self numberOfComponents]];
 					[self getComponents:components];
 					color = [UIColor colorWithRed:components[0] green:components[0] blue:components[0] alpha:components[1]];
+					break;
 				}
+				default:
+					;
 			}
 			break;
 		case kCGColorSpaceModelRGB:
@@ -54,7 +57,13 @@
 				case kCGColorSpaceModelRGB:
 					// RGB --> RGB
 					color = self;
+					break;
+				default:
+					;
 			}
+			break;
+		default:
+			;
 	}
 	return color;
 }
